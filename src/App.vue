@@ -8,8 +8,8 @@ import WeatherComposition from './components/WeatherComposition.vue'
 <template>
   <div class="practice-container">
     <!-- component template content rendered here -->
-    <WeatherMockup />
-    <!-- <WeatherComposition /> -->
+    <!-- <WeatherMockup /> -->
+    <WeatherComposition />
   </div>
 </template>
 
