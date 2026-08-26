@@ -1,44 +1,27 @@
 # skala-vue
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3와 Vite를 활용한 실습
 
-## Recommended IDE Setup
+## 프로젝트 세팅
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Vue 3 + Vite 프로젝트 생성
+- 개발 서버 실행 및 브라우저 화면 확인
+- `http://localhost:5173`에서 기본 Vue 화면 확인
+- HMR(저장 시 화면 자동 갱신) 동작 확인
 
-## Recommended Browser Setup
+## 실행 방법
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## 과제 기록
 
-```sh
-npm run build
-```
+### 과제 1: 날씨 Mockup
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+1. `v-for`와 `:key="weather.id"`를 사용하여 날씨 데이터 배열의 도시별 카드를 반복 출력했다.
+2. `v-if`와 `v-else`를 사용하여 기온이 25도 이상이면 더움, 미만이면 선선함 라벨을 표시했다.
+3. `:value`와 `@input`을 사용하여 한글 도시 검색어를 입력하고, 입력된 도시명을 화면에 출력했다.
+4. 카드 클릭 시 선택 도시를 상태바에 표시하고, 상세보기 버튼은 `@click.stop`으로 버블링 없이 날씨 정보를 알림창에 표시했다.
+5. 기존 데이터에 경주, 대전 날씨 데이터를 추가하여 새로운 날씨 카드가 자동으로 출력되도록 Mockup을 확장했다.
