@@ -46,6 +46,14 @@ npm run dev
 
 ### 과제 4: Weather Router
 
+1. Vue Router에 지연 로딩 방식의 라우트를 설정하고, 정의되지 않은 주소를 처리하는 Catch-all Route를 구현했다.
+2. `App.vue`에 `RouterLink` 기반 내비게이션과 화면 전환 영역인 `RouterView`를 구성했다.
+3. `WeatherHomeView.vue`에서 기존 날씨 대시보드 기능을 유지하고, 상세보기 클릭 시 `router.push()`로 도시 상세 주소로 이동하도록 구현했다.
+4. `WeatherDetailView.vue`에서 동적 경로의 `cityId`를 props로 전달받아, Mount 시점에 Mock Data에서 해당 도시의 날씨 정보를 출력했다.
+5. `WeatherAboutView.vue`에 서비스 소개와 주요 기능을 작성하고, 메인 대시보드로 돌아가는 링크를 구현했다.
+6. 추가 View인 `WeatherStatsView.vue`를 만들어 도시 수, 평균 기온, 최고·최저 기온 도시를 표시하고 `/stats` 경로로 연결했다.
+7. `NotFoundView.vue`를 구현하여 존재하지 않는 주소 접근 시 안내 화면과 메인 이동 버튼을 표시했다.
+
 ### 과제 5: Weather Store
 
 ### 과제 6: Weather Axios
