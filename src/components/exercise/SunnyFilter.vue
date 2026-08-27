@@ -8,26 +8,23 @@ const props = defineProps({
 
 const emit = defineEmits(['update-sunny-only'])
 
-const updateSunnyOnly = (e) => {
-  emit('update-sunny-only', e.target.checked)
+const updateSunnyOnly = (isSunnyOnly) => {
+  emit('update-sunny-only', isSunnyOnly)
 }
 </script>
 
 <template>
-  <label class="sunny-filter">
-    <input type="checkbox" :checked="props.showSunnyOnly" @change="updateSunnyOnly" />
-    맑은 도시만 보기
-  </label>
+  <el-switch
+    class="sunny-filter"
+    :model-value="props.showSunnyOnly"
+    @update:model-value="updateSunnyOnly"
+    active-text="맑은 도시만 보기"
+  />
 </template>
 
 <style scoped>
 .sunny-filter {
-  display: block;
   margin-top: 12px;
   margin-bottom: 24px;
-}
-
-.sunny-filter input {
-  margin-right: 6px;
 }
 </style>

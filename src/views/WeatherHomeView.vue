@@ -57,7 +57,7 @@ const filteredWeatherList = computed(() => {
 // 검색 결과 + 맑음 필터 함께 반영한 결과 표시
 const displayedWeatherList = computed(() => {
   return showSunnyOnly.value
-    ? filteredWeatherList.value.filter((weather) => weather.status === '맑음')
+    ? filteredWeatherList.value.filter((weather) => weather.weatherCode === 800)
     : filteredWeatherList.value
 })
 
@@ -98,6 +98,7 @@ const loadCurrentWeather = async () => {
           ...city,
           temp: Math.round(data.main.temp),
           status: data.weather[0].description,
+          weatherCode: data.weather[0].id,
           humidity: data.main.humidity,
         }
       }),
@@ -133,7 +134,7 @@ watch(showSunnyOnly, (isSunnyOnly) => {
 
 <template>
   <main class="weather-mockup">
-    <h1>과제 6: Weather Axios</h1>
+    <h1>과제 7: Weather UI Library</h1>
     <BaseDashboardCard>
       <SearchBar :search-query="searchQuery" @update-query="updateSearchQuery" />
       <SunnyFilter :show-sunny-only="showSunnyOnly" @update-sunny-only="updateSunnyOnly" />
@@ -148,17 +149,19 @@ watch(showSunnyOnly, (isSunnyOnly) => {
     </BaseDashboardCard>
 
     <BaseDashboardCard>
-      <section class="weather-section">
+      <section
+        v-loading="isLoading"
+        class="weather-section"
+        element-loading-text="실시간 날씨를 불러오는 중입니다."
+      >
         <h2>지역별 날씨 현황</h2>
 
-        <p v-if="isLoading" class="loading-message">실시간 날씨를 불러오는 중입니다.</p>
+        <div v-if="errorMessage" class="error-state">
+          <el-alert :title="errorMessage" type="error" show-icon :closable="false" />
+          <el-button type="danger" plain @click="loadCurrentWeather">다시 시도</el-button>
+        </div>
 
-        <p v-else-if="errorMessage" class="error-message">
-          {{ errorMessage }}
-          <button @click="loadCurrentWeather">다시 시도</button>
-        </p>
-
-        <div v-else class="weather-list">
+        <div v-else-if="!isLoading" class="weather-list">
           <WeatherCard
             v-for="weather in displayedWeatherList"
             :key="weather.id"
@@ -166,9 +169,10 @@ watch(showSunnyOnly, (isSunnyOnly) => {
             @select-card="cardSelected"
             @click-detail="showDetail"
           />
-          <p v-if="displayedWeatherList.length === 0" class="no-results">
-            조건에 맞는 도시가 없습니다.
-          </p>
+          <el-empty
+            v-if="displayedWeatherList.length === 0"
+            description="조건에 맞는 도시가 없습니다."
+          />
         </div>
       </section>
       <div class="status-bar">
@@ -202,19 +206,9 @@ watch(showSunnyOnly, (isSunnyOnly) => {
   font-weight: bold;
 }
 
-.no-results {
-  margin-top: 12px;
-  color: #6b7280;
-  text-align: center;
-}
-
-.loading-message,
-.error-message {
-  text-align: center;
-}
-
-.error-message {
-  color: #e74c3c;
+.error-state {
+  display: grid;
+  gap: 12px;
 }
 
 .status-setting {

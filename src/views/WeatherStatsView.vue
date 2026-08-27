@@ -1,6 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
 import BaseDashboardCard from '../components/exercise/BaseDashboardCard.vue'
+import { useConfigStore } from '../stores/configStore'
+
+const configStore = useConfigStore()
 
 // 통계 화면에서 임시로 사용할 날씨 Mock Data
 const weatherList = ref([
@@ -14,8 +17,17 @@ const weatherList = ref([
 // 전체 도시 기온의 평균 계산
 const averageTemp = computed(() => {
   const totalTemp = weatherList.value.reduce((sum, weather) => sum + weather.temp, 0)
-  return (totalTemp / weatherList.value.length).toFixed(1)
+  return totalTemp / weatherList.value.length
 })
+
+// Store의 단위 설정에 맞춰 섭씨 원본값을 화면 표시용 기온으로 변환
+const convertTemp = (temp) => {
+  return configStore.unit === 'fahrenheit' ? (temp * 9) / 5 + 32 : temp
+}
+
+const displayAverageTemp = computed(() => convertTemp(averageTemp.value).toFixed(1))
+
+const displayTemp = (temp) => Math.round(convertTemp(temp))
 
 // 가장 높은 기온을 가진 도시 계산
 const hottestCity = computed(() => {
@@ -47,17 +59,21 @@ const coolestCity = computed(() => {
 
         <article class="stat-item">
           <span>평균 기온</span>
-          <strong>{{ averageTemp }}°C</strong>
+          <strong>{{ displayAverageTemp }}{{ configStore.unitSymbol }}</strong>
         </article>
 
         <article class="stat-item">
           <span>가장 더운 도시</span>
-          <strong>{{ hottestCity.name }} ({{ hottestCity.temp }}°C)</strong>
+          <strong>
+            {{ hottestCity.name }} ({{ displayTemp(hottestCity.temp) }}{{ configStore.unitSymbol }})
+          </strong>
         </article>
 
         <article class="stat-item">
           <span>가장 선선한 도시</span>
-          <strong>{{ coolestCity.name }} ({{ coolestCity.temp }}°C)</strong>
+          <strong>
+            {{ coolestCity.name }} ({{ displayTemp(coolestCity.temp) }}{{ configStore.unitSymbol }})
+          </strong>
         </article>
       </div>
     </BaseDashboardCard>
@@ -68,7 +84,7 @@ const coolestCity = computed(() => {
       <ul class="weather-summary-list">
         <li v-for="weather in weatherList" :key="weather.id">
           <span>{{ weather.name }} ({{ weather.status }})</span>
-          <strong>{{ weather.temp }}°C</strong>
+          <strong>{{ displayTemp(weather.temp) }}{{ configStore.unitSymbol }}</strong>
         </li>
       </ul>
     </BaseDashboardCard>

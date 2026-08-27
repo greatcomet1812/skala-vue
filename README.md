@@ -65,19 +65,19 @@ npm run dev
 
 #### Axios 활용 준비
 
-Axios 라이브러리를 설치한다.
+먼저 Axios 라이브러리를 설치했다.
 
 ```bash
 npm install axios
 ```
 
-OpenWeatherMap에 가입하여 API Key를 발급받은 후, 프로젝트 최상위 경로에 `.env.local` 파일을 생성한다.
+OpenWeatherMap에 가입하여 API Key를 발급받은 후, 프로젝트 최상위 경로에 `.env.local` 파일을 생성했다.
 
 ```env
 VITE_OPENWEATHER_API_KEY=YOUR_API_KEY
 ```
 
-환경변수 적용을 위해 개발 서버를 다시 실행한다.
+이후 환경변수 적용을 위해 개발 서버를 다시 실행했다.
 
 ```bash
 npm run dev
@@ -90,6 +90,34 @@ npm run dev
 3. 외부 Open-Meteo Air Quality API를 추가하여 도시별 PM10·PM2.5 정보를 표시하고 데이터 출처를 명시했다.
 
 
-### 과제 6: Weather UI Library
+### 과제 7: Weather UI Library
 
-### 과제 6: Weather Deployment
+#### Element Plus 선택 이유
+
+Vue 3를 공식 지원하고 컴포넌트 사용법이 간단하며, 입력창, 버튼, 카드, 메뉴 등 본 날씨 애플리케이션에 필요한 UI 요소를 제공하여 Element Plus를 선택했다.
+
+#### 설치 및 설정
+
+```bash
+npm install element-plus
+```
+
+`src/main.js`에서 Element Plus와 기본 스타일을 등록했다.
+
+```js
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
+app.use(ElementPlus)
+```
+
+#### 적용 내용
+
+1. `el-menu`와 `el-menu-item`을 사용하여 라우터 내비게이션을 구성했다.
+2. `el-card`를 대시보드 영역과 도시별 날씨 카드에 적용했다.
+3. `el-input`과 `el-switch`를 도시 검색 및 맑은 도시 필터에 적용했다.
+4. `el-button`과 `el-tag`를 상세보기 버튼과 날씨 상태 표시에 적용했다.
+5. `v-loading`, `el-alert`, `el-empty`를 사용하여 API 로딩, 오류 및 검색 결과 없음 상태를 표시했다.
+6. 전역 Store의 온도 단위 설정이 메인, 상세 및 통계 화면에 동일하게 적용되도록 구성했다.
+
+### 과제 8: Weather Deployment

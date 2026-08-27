@@ -37,35 +37,35 @@ const clickDetail = () => {
 </script>
 
 <template>
-  <article class="weather-card" @click="selectCard">
-    <div>
-      <h3>
-        {{ props.weather.name }}
-        <span v-if="configStore.showWeatherStatus"> ({{ props.weather.status }}) </span>
-      </h3>
-      <p>현재 기온: {{ displayTemp }}{{ configStore.unitSymbol }}</p>
+  <el-card class="weather-card" shadow="hover" @click="selectCard">
+    <div class="weather-card-content">
+      <div>
+        <h3>
+          {{ props.weather.name }}
+          <el-tag v-if="configStore.showWeatherStatus" type="info" size="small">
+            {{ props.weather.status }}
+          </el-tag>
+        </h3>
+        <p>현재 기온: {{ displayTemp }}{{ configStore.unitSymbol }}</p>
 
-      <p v-if="props.weather.temp >= 25" class="hot-label">🔥 더움 (25도 이상)</p>
-      <p v-else class="cool-label">❄️ 선선함 (25도 미만)</p>
+        <p v-if="props.weather.temp >= 25" class="hot-label">🔥 더움 (25도 이상)</p>
+        <p v-else class="cool-label">❄️ 선선함 (25도 미만)</p>
+      </div>
+
+      <el-button type="primary" plain @click.stop="clickDetail">상세보기</el-button>
     </div>
-
-    <button @click.stop="clickDetail">상세보기</button>
-  </article>
+  </el-card>
 </template>
 
 <style scoped>
 .weather-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
   cursor: pointer;
 }
 
-.weather-card:hover {
-  background-color: #f8fafc;
+.weather-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .weather-card h3,
