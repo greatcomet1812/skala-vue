@@ -134,7 +134,7 @@ watch(showSunnyOnly, (isSunnyOnly) => {
 
 <template>
   <main class="weather-mockup">
-    <h1>과제 7: Weather UI Library</h1>
+    <h1>날씨 대시보드</h1>
     <BaseDashboardCard>
       <SearchBar :search-query="searchQuery" @update-query="updateSearchQuery" />
       <SunnyFilter :show-sunny-only="showSunnyOnly" @update-sunny-only="updateSunnyOnly" />
