@@ -63,6 +63,33 @@ npm run dev
 
 ### 과제 6: Weather Axios
 
+#### Axios 활용 준비
+
+Axios 라이브러리를 설치한다.
+
+```bash
+npm install axios
+```
+
+OpenWeatherMap에 가입하여 API Key를 발급받은 후, 프로젝트 최상위 경로에 `.env.local` 파일을 생성한다.
+
+```env
+VITE_OPENWEATHER_API_KEY=YOUR_API_KEY
+```
+
+환경변수 적용을 위해 개발 서버를 다시 실행한다.
+
+```bash
+npm run dev
+```
+
+#### 과제 수행 내용
+
+1. OpenWeatherMap Current Weather API를 통해 도시별 실제 기온, 날씨 상태와 습도를 가져와 기존 날씨 카드에 적용했다.
+2. OpenWeatherMap 5 Day / 3 Hour Forecast API를 추가하여 도시 상세 페이지에 3시간 단위 예보를 표시했다.
+3. 외부 Open-Meteo Air Quality API를 추가하여 도시별 PM10·PM2.5 정보를 표시하고 데이터 출처를 명시했다.
+
+
 ### 과제 6: Weather UI Library
 
 ### 과제 6: Weather Deployment

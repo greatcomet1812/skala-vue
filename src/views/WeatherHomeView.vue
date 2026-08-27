@@ -2,9 +2,10 @@
 
 <!-- 모든 반응형 데이터 유지 -->
 <script setup>
-import { computed, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfigStore } from '../stores/configStore'
+import { fetchCurrentWeather } from '../services/weatherApi'
 
 import BaseDashboardCard from '../components/exercise/BaseDashboardCard.vue'
 import SearchBar from '../components/exercise/SearchBar.vue'
@@ -23,14 +24,19 @@ const searchQuery = ref('')
 // 선택된 도시
 const selectedCityInfo = ref(null)
 
-// 지역별 날씨 데이터 배열
-const weatherList = ref([
-  { id: 'city_01', name: '서울', temp: 28, status: '맑음' },
-  { id: 'city_02', name: '수원', temp: 24, status: '비' },
-  { id: 'city_03', name: '부산', temp: 26, status: '구름' },
-  { id: 'city_04', name: '경주', temp: 29, status: '맑음' },
-  { id: 'city_05', name: '대전', temp: 25, status: '구름' },
-])
+// API 요청에 사용할 도시 좌표
+const cityList = [
+  { id: 'city_01', name: '서울', lat: 37.5665, lon: 126.978 },
+  { id: 'city_02', name: '수원', lat: 37.2636, lon: 127.0286 },
+  { id: 'city_03', name: '부산', lat: 35.1796, lon: 129.0756 },
+  { id: 'city_04', name: '경주', lat: 35.8562, lon: 129.2247 },
+  { id: 'city_05', name: '대전', lat: 36.3504, lon: 127.3845 },
+]
+
+// OpenWeatherMap에서 받아온 지역별 실제 날씨
+const weatherList = ref([])
+const isLoading = ref(false)
+const errorMessage = ref('')
 
 // 상태바 문구
 const statusMessage = ref('카드를 클릭하거나 검색해 보세요.')
@@ -77,6 +83,34 @@ const updateSearchQuery = (newQuery) => {
 const updateSunnyOnly = (isSunnyOnly) => {
   showSunnyOnly.value = isSunnyOnly
 }
+
+// 도시별 현재 날씨를 병렬로 가져와 기존 카드 형식으로 가공
+const loadCurrentWeather = async () => {
+  isLoading.value = true
+  errorMessage.value = ''
+
+  try {
+    weatherList.value = await Promise.all(
+      cityList.map(async (city) => {
+        const data = await fetchCurrentWeather(city.lat, city.lon)
+
+        return {
+          ...city,
+          temp: Math.round(data.main.temp),
+          status: data.weather[0].description,
+          humidity: data.main.humidity,
+        }
+      }),
+    )
+  } catch (error) {
+    console.error('현재 날씨 조회 실패:', error)
+    errorMessage.value = '실시간 날씨 데이터를 가져오지 못했습니다.'
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(loadCurrentWeather)
 // ====================================================
 // 상태 감시
 // ====================================================
@@ -99,7 +133,7 @@ watch(showSunnyOnly, (isSunnyOnly) => {
 
 <template>
   <main class="weather-mockup">
-    <h1>과제 4: 날씨 (Router)</h1>
+    <h1>과제 6: Weather Axios</h1>
     <BaseDashboardCard>
       <SearchBar :search-query="searchQuery" @update-query="updateSearchQuery" />
       <SunnyFilter :show-sunny-only="showSunnyOnly" @update-sunny-only="updateSunnyOnly" />
@@ -117,7 +151,14 @@ watch(showSunnyOnly, (isSunnyOnly) => {
       <section class="weather-section">
         <h2>지역별 날씨 현황</h2>
 
-        <div class="weather-list">
+        <p v-if="isLoading" class="loading-message">실시간 날씨를 불러오는 중입니다.</p>
+
+        <p v-else-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+          <button @click="loadCurrentWeather">다시 시도</button>
+        </p>
+
+        <div v-else class="weather-list">
           <WeatherCard
             v-for="weather in displayedWeatherList"
             :key="weather.id"
@@ -165,6 +206,15 @@ watch(showSunnyOnly, (isSunnyOnly) => {
   margin-top: 12px;
   color: #6b7280;
   text-align: center;
+}
+
+.loading-message,
+.error-message {
+  text-align: center;
+}
+
+.error-message {
+  color: #e74c3c;
 }
 
 .status-setting {
