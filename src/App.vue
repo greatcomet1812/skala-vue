@@ -1,15 +1,20 @@
 <!-- root component -->
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import UnitToggler from './components/exercise/UnitToggler.vue'
 </script>
 
 <template>
   <div class="app-shell">
     <!-- nav bar -->
     <nav class="navigation">
-      <RouterLink to="/">날씨 대시보드</RouterLink>
-      <RouterLink to="/about">서비스 소개</RouterLink>
-      <RouterLink to="/stats">날씨 통계</RouterLink>
+      <div class="nav-links">
+        <RouterLink to="/">날씨 대시보드</RouterLink>
+        <RouterLink to="/about">서비스 소개</RouterLink>
+        <RouterLink to="/stats">날씨 통계</RouterLink>
+      </div>
+
+      <UnitToggler />
     </nav>
 
     <div class="practice-container">
@@ -21,26 +26,29 @@ import { RouterLink, RouterView } from 'vue-router'
 <style>
 @import '@/assets/practice.css';
 
-.app-shell {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #2c3e50;
-  line-height: 1.6;
-}
 .navigation {
   display: flex;
-  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
   width: 800px;
-  max-width: 1200px;
+  max-width: calc(100% - 32px);
   margin: 24px auto 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .navigation a {
-  color: #2c3e50;
+  color: #64748b;
   text-decoration: none;
 }
 
 .navigation a.router-link-active {
-  color: #42b883;
+  color: #2e7d32;
   font-weight: bold;
 }
 </style>

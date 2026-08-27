@@ -56,6 +56,11 @@ npm run dev
 
 ### 과제 5: Weather Store
 
+1. Pinia의 `configStore`에 온도 단위 상태, 단위 기호 Getter, 섭씨·화씨 전환 Action을 구현하고 `UnitToggler` 컴포넌트를 생성했다.
+2. `UnitToggler`를 내비게이션 영역에 배치하여 모든 페이지에서 온도 단위를 변경할 수 있도록 구성했다.
+3. Store의 단위 설정을 메인 날씨 카드와 상세 페이지에 적용하여 기온과 단위 기호가 반응형으로 변경되도록 구현했다.
+4. 개인 Store 기능으로 날씨 상태 표시 여부 State, 안내 문구 Getter, 표시 전환 Action을 추가하고 메인 및 상세 화면에 적용했다.
+
 ### 과제 6: Weather Axios
 
 ### 과제 6: Weather UI Library

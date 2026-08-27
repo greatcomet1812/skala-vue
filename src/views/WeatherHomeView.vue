@@ -4,11 +4,14 @@
 <script setup>
 import { computed, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
+import { useConfigStore } from '../stores/configStore'
+
 import BaseDashboardCard from '../components/exercise/BaseDashboardCard.vue'
 import SearchBar from '../components/exercise/SearchBar.vue'
 import WeatherCard from '../components/exercise/WeatherCard.vue'
 import SunnyFilter from '../components/exercise/SunnyFilter.vue'
 
+const configStore = useConfigStore()
 const router = useRouter()
 
 // ====================================================
@@ -100,6 +103,14 @@ watch(showSunnyOnly, (isSunnyOnly) => {
     <BaseDashboardCard>
       <SearchBar :search-query="searchQuery" @update-query="updateSearchQuery" />
       <SunnyFilter :show-sunny-only="showSunnyOnly" @update-sunny-only="updateSunnyOnly" />
+      <div class="status-setting">
+        <span>
+          날씨 상태:
+          <strong>{{ configStore.weatherStatusLabel }}</strong>
+        </span>
+
+        <button @click="configStore.toggleWeatherStatus">상태 표시/숨김</button>
+      </div>
     </BaseDashboardCard>
 
     <BaseDashboardCard>
@@ -154,5 +165,16 @@ watch(showSunnyOnly, (isSunnyOnly) => {
   margin-top: 12px;
   color: #6b7280;
   text-align: center;
+}
+
+.status-setting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.status-setting strong {
+  color: #2e7d32;
 }
 </style>
