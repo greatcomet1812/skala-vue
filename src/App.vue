@@ -1,15 +1,13 @@
 <!-- root component -->
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import WeatherMockup from './components/WeatherMockup.vue'
-import WeatherComposition from './components/WeatherComposition.vue'
+// import { RouterLink, RouterView } from 'vue-router'
+import WeatherParent from './components/WeatherParent.vue'
 </script>
 
 <template>
   <div class="practice-container">
     <!-- component template content rendered here -->
-    <!-- <WeatherMockup /> -->
-    <WeatherComposition />
+    <WeatherParent />
   </div>
 </template>
 

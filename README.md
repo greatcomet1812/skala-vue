@@ -36,6 +36,14 @@ npm run dev
 
 ### 과제 3: Weather Component
 
+1. `WeatherParent.vue`에 검색어, 날씨 목록, 선택 도시, 필터 상태 등 모든 반응형 데이터와 계산·이벤트 로직을 유지했다.
+2. `BaseDashboardCard.vue`에 공통 카드 디자인과 `<slot>`을 구현하여 도시 검색 영역과 날씨 현황 영역을 재사용 가능한 구조로 분리했다.
+3. `SearchBar.vue`는 검색어를 props로 받아 표시하고, 입력값 변경 시 `update-query` 이벤트로 부모에게 전달하도록 구현했다.
+4. `WeatherCard.vue`는 도시 객체를 props로 받아 카드 한 장을 표시하고, 카드 선택과 상세보기 클릭을 각각 emit으로 부모에게 전달하도록 구현했다.
+5. 공통 카드, 날씨 카드, 맑음 필터 등 각 컴포넌트의 디자인을 `<style scoped>`로 역할에 맞게 분리했다.
+6. Slot 내부의 자식 컴포넌트가 부모 스코프에서 props와 emit으로 직접 통신하도록 구성했다.
+7. 개인 추가 기능인 `SunnyFilter.vue`를 별도 컴포넌트로 분리하여 맑은 도시만 보기 기능을 구현했다.
+
 ### 과제 4: Weather Router
 
 ### 과제 5: Weather Store
