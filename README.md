@@ -121,3 +121,41 @@ app.use(ElementPlus)
 6. 전역 Store의 온도 단위 설정이 메인, 상세 및 통계 화면에 동일하게 적용되도록 구성했다.
 
 ### 과제 8: Weather Deployment
+
+#### Source Code 품질관리
+
+1. ESLint로 제출 과제의 소스 코드를 검사했다.
+
+```bash
+npm run lint
+```
+
+Oxlint와 ESLint 검사 결과 `0 warnings, 0 errors`를 확인했다.
+
+2. API 키를 환경변수로 분리하고 Git 업로드에서 제외했다.
+
+```env
+# .env.local
+VITE_OPENWEATHER_API_KEY=YOUR_API_KEY
+```
+
+`.gitignore`의 `*.local` 규칙을 통해 `.env.local`이 Git에 포함되지 않도록 설정했다.
+
+#### Build & Deployment
+
+1. 프로젝트를 빌드하고 생성된 정적 파일을 확인했다.
+
+```bash
+npm run build
+npm run preview
+```
+
+빌드 결과 프로젝트 루트에 `dist` 정적 배포 파일이 생성되었으며, Preview 환경에서 기능이 정상 작동하는 것을 확인했다.
+
+2. Vite 및 GitHub 연동과 자동 재배포를 지원하는 Vercel을 선택하여 Production 환경으로 배포했다.
+
+Vercel에 `VITE_OPENWEATHER_API_KEY` 환경변수를 별도로 등록했으며, Vue Router 주소에서 새로고침해도 404가 발생하지 않도록 `vercel.json`에 SPA Rewrite 설정을 추가했다.
+
+#### 배포 주소
+
+[Weather Dashboard](https://skala-vue-skala-da10.vercel.app)
