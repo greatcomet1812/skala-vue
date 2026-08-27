@@ -175,7 +175,7 @@ watch(showSunnyOnly, (isSunnyOnly) => {
           />
         </div>
       </section>
-      <div class="status-bar">
+      <div v-if="!isLoading" class="status-bar">
         {{ statusMessage }}
       </div>
     </BaseDashboardCard>
